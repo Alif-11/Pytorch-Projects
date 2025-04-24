@@ -1,0 +1,1 @@
+[Your first deep CNN tutorial](https://www.digitalocean.com/community/tutorials/writing-cnns-from-scratch-in-pytorch)
