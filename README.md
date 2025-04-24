@@ -3,3 +3,6 @@ you are interested in.
 
 Command to activate the conda environment associated with this folder:
 conda activate pytorch-projects
+
+
+Using Python version 3.10.17
