@@ -2,40 +2,17 @@ import torch
 import torch.nn as nn
 import torchvision
 import torchvision.transforms as transforms
-
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# resize images down to 64 x 64
-# tensorify them
-# normalize,
-# random rotate them, then random affine them
-image_transforms_composition = transforms.Compose([transforms.Resize((64,64)),
-                                             transforms.ToTensor(),
-                                             transforms.Normalize(
-                                               mean=[0.4914, 0.4822, 0.4465],
-                                               std=[0.2023, 0.1994, 0.2010]),
-                                             transforms.RandomRotation(15),
-                                             transforms.RandomAffine(10,shear=(-10,10,-10,10))
-                                             ])
-
-# get train and test data
-train_dataset = torchvision.datasets.CIFAR10(root="./data", train=True, transform=image_transforms_composition,download=True)
-test_dataset = torchvision.datasets.CIFAR10(root="./data", train=False, transform=image_transforms_composition,download=True)
-                                             
-# dataloader for the training and testing datasets - prevents us from having
-# to push the entire dataset into RAM.
-# we set shuffle to True, so that we don't get caught up in learning loops.
-# since we are using stochastic mini batch learning, there is a chance for
-# our model to get stuck in some loop of parameter learning. Thus, turning on
-# the shuffle mechanism is important.
-training_loader = torch.utils.data.DataLoader(dataset=train_dataset,batch_size=64,shuffle=True)
-testing_loader = torch.utils.data.DataLoader(dataset=train_dataset,batch_size=64,shuffle=True)
-
-
 class ConvolutionalNeuralNetwork(nn.Module):
 
-  # define the layers of this neural network
+  
   def __init__(self, num_classes):
+
+    """ Define the layers of this Convolutional Neural Network. 
+
+    Args:
+      num_classes: number of output classes (int)
+    """
+
     super(ConvolutionalNeuralNetwork, self).__init__()
     # 3 in channels, 1 for each of R, G, and B. 
     # 32 out channels, for the 32 hidden layer dimensions
