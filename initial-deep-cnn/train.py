@@ -12,7 +12,7 @@ learning_rate = 0.01
 num_epochs = 20
 
 chosen_pretrained_weight_suffix = "epoch2"
-pretrained_weights_full_path = f"/Users/alifabdullah/Collaboration/Pytorch-Projects/initial-deep-cnn/saved_models/cnn_model_trained_on_cifar10_{chosen_pretrained_weight_suffix}"
+pretrained_weights_full_path = f"/Users/alifabdullah/Collaboration/Pytorch-Projects/initial-deep-cnn/saved_models/cnn_model_trained_on_cifar10_{chosen_pretrained_weight_suffix}.pth"
 
 use_pretrained = True
 
@@ -99,5 +99,5 @@ for epoch_idx in tqdm.tqdm(range(num_epochs),position=0,desc="Epoch Loop"):
     #print("idx", idx)
     #print("length of training loader", len(training_loader))
   print(f"Finished epoch {epoch_idx} with a loss of {cross_entropy_loss.item()}.")
-  torch.save(cnn_model.state_dict(),f"/Users/alifabdullah/Collaboration/Pytorch-Projects/initial-deep-cnn/saved_models/cnn_model_trained_on_cifar10_epoch{epoch_idx+1}")
+  torch.save(cnn_model.state_dict(),f"/Users/alifabdullah/Collaboration/Pytorch-Projects/initial-deep-cnn/saved_models/cnn_model_trained_on_cifar10_epoch{epoch_idx+1}.pth")
   
