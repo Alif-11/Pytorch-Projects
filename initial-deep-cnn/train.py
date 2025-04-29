@@ -6,17 +6,20 @@ import deep_cnn
 import tqdm
 import sys
 
+
 ## training loop hyperparameters
 batch_size = 64
 num_classes = 10
 learning_rate = 0.01
 num_epochs = 20
 
-chosen_epoch_idx = 3
+chosen_epoch_idx = 5
 chosen_pretrained_weight_suffix = f"epoch{chosen_epoch_idx}"
 pretrained_weights_full_path = f"/Users/alifabdullah/Collaboration/Pytorch-Projects/initial-deep-cnn/saved_models/cnn_model_trained_on_cifar10_{chosen_pretrained_weight_suffix}.pth"
 
 use_pretrained = True
+
+do_visualize = False
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -76,10 +79,9 @@ if use_pretrained: # if we want to use pretrained weights, then load the pretrai
   print("Got the pretrained model:", pretrained_weights_full_path)
   cnn_model = load_saved_model(pretrained_weights_full_path)
 
+
+
 # Here is the training loop
-
-
-
 for epoch_idx in tqdm.tqdm(range(chosen_epoch_idx, num_epochs), desc="Epoch Loop"):
   for idx, (images, labels) in enumerate(tqdm.tqdm(training_loader, desc="Batch Loop")):
 
@@ -94,8 +96,9 @@ for epoch_idx in tqdm.tqdm(range(chosen_epoch_idx, num_epochs), desc="Epoch Loop
     #cnn_model = deep_cnn.ConvolutionalNeuralNetwork(num_classes)
 
     # only uncomment these two lines if you want to visualize the cnn layers' outputs
-    #cnn_model.forward_visualized(images)
-    #sys.exit(0) # we just want this line and the line above for visualization
+    if do_visualize:
+      cnn_model.forward_visualized(images)
+      sys.exit(0) # we just want this line and the line above for visualization
     
 
     cnn_model_outputs = cnn_model(images)

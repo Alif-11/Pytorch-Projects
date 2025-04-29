@@ -4,6 +4,9 @@ import torchvision
 import torchvision.transforms as transforms
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
+
+
 
 class ConvolutionalNeuralNetwork(nn.Module):
 
@@ -91,11 +94,12 @@ class ConvolutionalNeuralNetwork(nn.Module):
     image_reshaped = torch.reshape(image[0], (64,64,3))
 
     # Scale the pixel values to the range 0-255 and convert to uint8
-    image_scaled = np.array((image_reshaped * 255).to(torch.uint8))
+    image_scaled = np.array((image_reshaped * 255).to(torch.uint8)).astype(np.uint8)
     cv2.imshow("First CIFAR10 Image",image_scaled)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
     conv1_output = self.conv_layer1(image)
+    self.plot_feature_maps(conv1_output)
     # Transpose the image to the correct format (height, width, channels)
     
     #print("conv1_output.shape", conv1_output.shape)
@@ -124,3 +128,22 @@ class ConvolutionalNeuralNetwork(nn.Module):
     relu1_output = self.relu1(linear2_output)
     linear3_output = self.linear3(relu1_output)
     return linear3_output
+  
+
+  def plot_feature_maps(self, feature_map):
+    """ Code useful for generating plots of Convolutional Neural Network output.
+    """
+    feature_map = feature_map[0].detach().numpy()
+    print("feature map shape", feature_map[0].shape)
+    k = feature_map.shape[0]
+    cols = int(np.ceil(np.sqrt(k)))
+    rows = cols
+    
+    plt.figure(figsize=(cols * 2, rows * 2))
+    for i in range(k):
+        plt.subplot(rows, cols, i + 1)
+        plt.imshow(feature_map[i], cmap='viridis', interpolation='nearest')
+        plt.title(f"Channel {i}")
+        plt.axis('off')
+    plt.tight_layout()
+    plt.show()
