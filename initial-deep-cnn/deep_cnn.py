@@ -74,7 +74,8 @@ class ConvolutionalNeuralNetwork(nn.Module):
     #print("conv5_output.shape", conv5_output.shape)
     conv6_output = self.conv_layer6(conv5_output)
     #print("conv6_output.shape", conv6_output.shape)
-    max_pool3_output = self.max_pool3(conv6_output)
+    max_pool3_output = self.max_pool3(conv6_output) # kinda went a little deep here....
+    # the images at this point are so pixelated
     #print("max_pool3_output.shape", max_pool3_output.shape)
 
     # first dimension is the batch size dimension
@@ -98,26 +99,35 @@ class ConvolutionalNeuralNetwork(nn.Module):
     cv2.imshow("First CIFAR10 Image",image_scaled)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
     conv1_output = self.conv_layer1(image)
     self.plot_feature_maps(conv1_output)
     # Transpose the image to the correct format (height, width, channels)
     
     #print("conv1_output.shape", conv1_output.shape)
     conv2_output = self.conv_layer2(conv1_output)
+    self.plot_feature_maps(conv2_output)
     #print("conv2_output.shape", conv2_output.shape)
     max_pool1_output = self.max_pool1(conv2_output)
+    self.plot_feature_maps(max_pool1_output)
     #print("max_pool1_output.shape", max_pool1_output.shape)
     conv3_output = self.conv_layer3(max_pool1_output)
+    self.plot_feature_maps(conv3_output)
     #print("conv3_output.shape", conv3_output.shape)
     conv4_output = self.conv_layer4(conv3_output)
+    self.plot_feature_maps(conv4_output)
     #print("conv4_output.shape", conv4_output.shape)
     max_pool2_output = self.max_pool2(conv4_output)
+    self.plot_feature_maps(max_pool2_output)
     #print("max_pool2_output.shape", max_pool2_output.shape)
     conv5_output = self.conv_layer5(max_pool2_output)
+    self.plot_feature_maps(conv5_output)
     #print("conv5_output.shape", conv5_output.shape)
     conv6_output = self.conv_layer6(conv5_output)
+    self.plot_feature_maps(conv6_output)
     #print("conv6_output.shape", conv6_output.shape)
     max_pool3_output = self.max_pool3(conv6_output)
+    self.plot_feature_maps(max_pool3_output)
     #print("max_pool3_output.shape", max_pool3_output.shape)
 
     # first dimension is the batch size dimension
