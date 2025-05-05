@@ -13,7 +13,7 @@ num_classes = 10
 learning_rate = 0.01
 num_epochs = 20
 
-chosen_epoch_idx = 11
+chosen_epoch_idx = 17
 chosen_pretrained_weight_suffix = f"epoch{chosen_epoch_idx}"
 pretrained_weights_full_path = f"/Users/alifabdullah/Collaboration/Pytorch-Projects/initial-deep-cnn/saved_models/cnn_model_trained_on_cifar10_{chosen_pretrained_weight_suffix}.pth"
 
