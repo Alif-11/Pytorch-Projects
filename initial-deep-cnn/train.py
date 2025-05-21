@@ -13,11 +13,11 @@ num_classes = 10
 learning_rate = 0.01
 num_epochs = 20
 
-chosen_epoch_idx = 17
+chosen_epoch_idx = 1
 chosen_pretrained_weight_suffix = f"epoch{chosen_epoch_idx}"
 pretrained_weights_full_path = f"/Users/alifabdullah/Collaboration/Pytorch-Projects/initial-deep-cnn/saved_models/cnn_model_trained_on_cifar10_{chosen_pretrained_weight_suffix}.pth"
 
-use_pretrained = True
+use_pretrained = False
 
 do_visualize = False
 
@@ -40,19 +40,19 @@ image_transforms_composition = transforms.Compose([transforms.Resize((64,64)),
                                              transforms.RandomAffine(10,shear=(-10,10,-10,10))
                                              ])
 
-# get train and test data
+# get train data
 # note that the CIFAR10 dataset only has 10 classes (as per its name)
 train_dataset = torchvision.datasets.CIFAR10(root="./data", train=True, transform=image_transforms_composition,download=True)
-test_dataset = torchvision.datasets.CIFAR10(root="./data", train=False, transform=image_transforms_composition,download=True)
+
                                              
-# dataloader for the training and testing datasets - prevents us from having
+# dataloader for the training datasets - prevents us from having
 # to push the entire dataset into RAM.
 # we set shuffle to True, so that we don't get caught up in learning loops.
 # since we are using stochastic mini batch learning, there is a chance for
 # our model to get stuck in some loop of parameter learning. Thus, turning on
 # the shuffle mechanism is important.
 training_loader = torch.utils.data.DataLoader(dataset=train_dataset,batch_size=batch_size,shuffle=True)
-testing_loader = torch.utils.data.DataLoader(dataset=train_dataset,batch_size=batch_size,shuffle=True)
+
 
 
 cnn_model = deep_cnn.ConvolutionalNeuralNetwork(num_classes)
@@ -85,6 +85,7 @@ if use_pretrained: # if we want to use pretrained weights, then load the pretrai
 for epoch_idx in tqdm.tqdm(range(chosen_epoch_idx, num_epochs), desc="Epoch Loop"):
   for idx, (images, labels) in enumerate(tqdm.tqdm(training_loader, desc="Batch Loop")):
 
+    cnn_model.train()
     # set the images and labels to the same device (in our case cpu)
     images = images.to(device) # of shape [batch_size, num_channels, height, width]
     labels = labels.to(device) # of shape [batch_size]
