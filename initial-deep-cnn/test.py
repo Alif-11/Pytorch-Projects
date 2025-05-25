@@ -6,6 +6,7 @@ import deep_cnn
 import tqdm
 import sys
 import os
+import numpy as np
 
 batch_size = 64
 num_classes = 10
@@ -39,8 +40,14 @@ with torch.no_grad():
     images = images.to(device) 
     labels = labels.to(device) 
 
-    cnn_model_outputs = test_cnn_model(images)
-    print(cnn_model_outputs.shape)
-    print(labels.shape)
+    cnn_model_outputs = torch.max(test_cnn_model(images), dim=-1).indices
+    for i in range(len(cnn_model_outputs)):
+      print(f"cnn_model_element: {cnn_model_outputs[i]}. label element: {labels[i]}.")
+      if cnn_model_outputs[i] == labels[i]:
+        correct += 1
+      count += 1
+    print(f"cnn_model_outputs.shape: {cnn_model_outputs.indices}")
+    print(f"labels.shape: {labels}")
+    print(f"percent correct: {correct/count}")
     print("End of loop")
     break
